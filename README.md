@@ -21,7 +21,7 @@ git clone https://github.com/urulai/toy_robot
 ```
 toy_robot
 ├── CMakeLists.txt                     --> CMake configuration file
-├── readme.md
+├── README.md
 ├── src                                --> source files
     ├── main.cpp
     ├── toy_robot.cpp
@@ -32,6 +32,8 @@ toy_robot
 └── tests                              --> unit tests
     ├── acutest.h
     ├── test_suite.cpp
+└── data                               --> test data
+    ├── input.txt
 ```
 
 ## Building the project:
