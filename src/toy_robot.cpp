@@ -16,7 +16,7 @@ ToyRobot::ToyRobot()
       max_y_{kDefaultMaxY},
       valid_state_{false},
       robot_props{} {
-  // Initialize the directions.
+  // Initializing the directions vector.
   // The directions are stored in a clockwise direction.
   // North -> East -> South -> West
   // For e.g.: A toy robot facing North will now face East after RIGHT command.
@@ -31,14 +31,15 @@ bool ToyRobot::CheckValidPosition(int pos_x, int pos_y) {
           pos_y >= kDefaultMinY && pos_y <= kDefaultMaxY);
 }
 
-void ToyRobot::Place(ToyRobotProps& props) {
-  if (!CheckValidPosition(props.pos_x, props.pos_y)) return;
+bool ToyRobot::Place(ToyRobotProps& props) {
+  if (!CheckValidPosition(props.pos_x, props.pos_y)) return false;
 
-  if (!Face(props.direction, true)) return;
+  if (!Face(props.direction, true)) return false;
 
   robot_props.pos_x = props.pos_x;
   robot_props.pos_y = props.pos_y;
   valid_state_ = true;
+  return valid_state_;
 }
 
 bool ToyRobot::Face(string new_direction, bool init) {
@@ -78,8 +79,8 @@ void ToyRobot::Move() {
 
 void ToyRobot::Report() {
   if (valid_state_)
-    cout << robot_props.pos_x << "," << robot_props.pos_y << "," << robot_props.direction
-         << endl;
+    cout << robot_props.pos_x << "," << robot_props.pos_y << ","
+         << robot_props.direction << endl;
 }
 
 void ToyRobot::Rotate(enum Turn t) {

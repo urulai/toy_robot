@@ -17,7 +17,7 @@ namespace game {
 class ToyRobot {
  public:
   void Move();
-  void Place(ToyRobotProps& props);
+  bool Place(ToyRobotProps& props);
   bool Face(string new_direction, bool init=false);
   void Rotate(enum Turn t);
   void Report();

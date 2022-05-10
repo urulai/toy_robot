@@ -8,7 +8,8 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
   if (argc < 2) {
-    cout << "Error, file name is missing.\nFormat: ./toy_robot <filename>" << endl;
+    cout << "Error, filename is missing.\nFormat: ./toy_robot <filename>"
+         << endl;
     return 1;
   }
 
@@ -30,12 +31,10 @@ int main(int argc, char* argv[]) {
       else if (cmd == Command::kTurnLeft) {
         game::Turn t = game::Turn::kTurnLeft;
         toyrobot.Rotate(t);
-      }
-      else if (cmd == Command::kTurnRight) {
+      } else if (cmd == Command::kTurnRight) {
         game::Turn t = game::Turn::kTurnRight;
         toyrobot.Rotate(t);
-      }
-      else if (cmd == Command::kReportPosition)
+      } else if (cmd == Command::kReportPosition)
         toyrobot.Report();
     }
   }

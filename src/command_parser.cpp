@@ -12,12 +12,12 @@ Command Parser::parse(const string str, ToyRobotProps& props) {
   enum Command cmd = Command::kUnsupported;
 
   // The pattern will match from 4 to 6 characters.
-  regex others("^([A-Z]{4,6})$");
+  regex pattern_to_match_other_commands("^([A-Z]{4,6})$");
   // Pattern to match PLACE command.
-  regex place_cmd_pattern("^PLACE\\s(\\d),(\\d),([A-Z]{4,5})$");
+  regex pattern_place_command("^PLACE\\s(\\d),(\\d),([A-Z]{4,5})$");
 
   smatch results;
-  if (regex_search(str, results, place_cmd_pattern)) {
+  if (regex_search(str, results, pattern_place_command)) {
     // Ignoring the entire matched text.
     for (size_t idx = 1; idx < results.size(); idx++) {
       // First capturing group.
@@ -32,7 +32,7 @@ Command Parser::parse(const string str, ToyRobotProps& props) {
     }
 
     cmd = Command::kPlaceToyRobot;
-  } else if (regex_search(str, results, others)) {
+  } else if (regex_search(str, results, pattern_to_match_other_commands)) {
     if (results.str(1) == Parser::kCommandMove)
       cmd = Command::kMoveToyRobot;
     else if (results.str(1) == Parser::kCommandReport)

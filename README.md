@@ -10,6 +10,7 @@ The application is a simulation of a toy robot moving on a square table top, of 
     ```
 2. GNU C/C++ Compiler
 3. Ubuntu 18.04 on Windows.
+4. Input file for the program must use LF characters for line termination.
 
 ## Installation
 ```sh
@@ -64,7 +65,7 @@ A sample input file ***'input.txt'*** to run the executable is present in the **
     ./toy_robot ./../data/input.txt
     ```
 
-# Running unit tests:
+## Running unit tests:
 1. Change to ***build*** directory, if required.
 2. Run the unit test executable.
     ```sh
