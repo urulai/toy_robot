@@ -18,7 +18,7 @@ class ToyRobot {
  public:
   void Move();
   bool Place(ToyRobotProps& props);
-  bool Face(string new_direction, bool init=false);
+  bool Face(string new_direction);
   void Rotate(enum Turn t);
   void Report();
 
@@ -44,6 +44,7 @@ class ToyRobot {
   ToyRobotProps robot_props;
 
   vector<string> directions;
+  int directions_size_;
 };
 
 };  // namespace Game

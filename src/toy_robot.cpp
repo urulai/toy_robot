@@ -1,7 +1,9 @@
 #include "../include/toy_robot.h"
 
+#include <algorithm>
 #include <iostream>
 
+using namespace std;
 using namespace game;
 
 const string ToyRobot::kDirectionEast = "EAST";
@@ -15,15 +17,10 @@ ToyRobot::ToyRobot()
       min_y_{kDefaultMinY},
       max_y_{kDefaultMaxY},
       valid_state_{false},
-      robot_props{} {
-  // Initializing the directions vector.
-  // The directions are stored in a clockwise direction.
-  // North -> East -> South -> West
-  // For e.g.: A toy robot facing North will now face East after RIGHT command.
-  directions.push_back(kDirectionNorth);
-  directions.push_back(kDirectionEast);
-  directions.push_back(kDirectionSouth);
-  directions.push_back(kDirectionWest);
+      robot_props{},
+      directions(
+          {kDirectionNorth, kDirectionEast, kDirectionSouth, kDirectionWest}) {
+  directions_size_ = directions.size();
 }
 
 bool ToyRobot::CheckValidPosition(int pos_x, int pos_y) {
@@ -34,7 +31,7 @@ bool ToyRobot::CheckValidPosition(int pos_x, int pos_y) {
 bool ToyRobot::Place(ToyRobotProps& props) {
   if (!CheckValidPosition(props.pos_x, props.pos_y)) return false;
 
-  if (!Face(props.direction, true)) return false;
+  if (!Face(props.direction)) return false;
 
   robot_props.pos_x = props.pos_x;
   robot_props.pos_y = props.pos_y;
@@ -42,13 +39,11 @@ bool ToyRobot::Place(ToyRobotProps& props) {
   return valid_state_;
 }
 
-bool ToyRobot::Face(string new_direction, bool init) {
+bool ToyRobot::Face(string new_direction) {
   if (new_direction != kDirectionEast && new_direction != kDirectionWest &&
       new_direction != kDirectionNorth && new_direction != kDirectionSouth) {
     return false;
   }
-
-  if (!init && !valid_state_) return false;
 
   robot_props.direction = new_direction;
   return true;
@@ -99,32 +94,17 @@ void ToyRobot::Rotate(enum Turn t) {
 }
 
 void ToyRobot::TurnLeft() {
-  vector<string>::reverse_iterator it = directions.rbegin();
+  vector<string>::iterator it =
+      std::find(directions.begin(), directions.end(), robot_props.direction);
 
-  for (; it != directions.rend(); it++) {
-    if (robot_props.direction == *it) break;
-  }
-
-  if (++it == directions.rend()) {
-    it = directions.rbegin();
-    robot_props.direction = *it;
-  } else {
-    robot_props.direction = *it;
-  }
+  int pos = ((it - directions.begin()) - 1 + directions_size_) % directions_size_;
+  robot_props.direction = directions[pos];
 }
 
 void ToyRobot::TurnRight() {
-  vector<string>::iterator it = directions.begin();
+  vector<string>::iterator it =
+      std::find(directions.begin(), directions.end(), robot_props.direction);
 
-  for (; it != directions.end(); ++it) {
-    if (robot_props.direction == *it) break;
-  }
-
-  if (++it == directions.end()) {
-    it = directions.begin();
-    robot_props.direction = *it;
-
-  } else {
-    robot_props.direction = *it;
-  }
+  int pos = ((it - directions.begin()) + 1) % directions_size_;
+  robot_props.direction = directions[pos];
 }

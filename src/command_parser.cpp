@@ -12,9 +12,9 @@ Command Parser::parse(const string str, ToyRobotProps& props) {
   enum Command cmd = Command::kUnsupported;
 
   // The pattern will match from 4 to 6 characters.
-  regex pattern_to_match_other_commands("^([A-Z]{4,6})$");
+  regex pattern_to_match_other_commands(std::string(R"(^([A-Z]{4,6})$)"));
   // Pattern to match PLACE command.
-  regex pattern_place_command("^PLACE\\s(\\d),(\\d),([A-Z]{4,5})$");
+  regex pattern_place_command(std::string(R"(^PLACE\s(\d),(\d),([A-Z]{4,5})$)"));
 
   smatch results;
   if (regex_search(str, results, pattern_place_command)) {

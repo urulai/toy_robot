@@ -2,6 +2,8 @@
 #include "../include/toy_robot.h"
 #include "acutest.h"
 
+#include <iostream>
+
 // Command Parser tests
 void test_command_parser_cmd_list(void) {
   TEST_CHECK(Parser::kCommandMove == "MOVE");
@@ -63,6 +65,7 @@ void test_command_parser_rejects_invalid_report_cmd(void) {
 
   ToyRobotProps props;
   enum Command cmd = Parser::parse(str, props);
+  std::cout << static_cast<unsigned int>(cmd) << std::endl;
   TEST_CHECK(cmd == Command::kUnsupported);
 }
 
@@ -147,17 +150,13 @@ void test_robot_place_command_is_accepted(void) {
 void test_robot_face_command_is_ignored(void) {
   // Tests Face command is ignored, when the toy robot is not in a valid state.
   game::ToyRobot toy_robot;
-  bool starting_game = true;
-
-  TEST_CHECK(toy_robot.Face(game::ToyRobot::kDirectionEast, starting_game));
+  TEST_CHECK(toy_robot.Face(game::ToyRobot::kDirectionEast));
 }
 
 void test_robot_face_command_is_accepted_for_initialization(void) {
   // Tests Face command is accepted for toy robot initialization.
   game::ToyRobot toy_robot;
-  bool starting_game = true;
-
-  TEST_CHECK(toy_robot.Face(game::ToyRobot::kDirectionEast, starting_game));
+  TEST_CHECK(toy_robot.Face(game::ToyRobot::kDirectionEast));
 }
 
 void test_robot_face_command_is_accepted(void) {
@@ -169,7 +168,7 @@ void test_robot_face_command_is_accepted(void) {
   enum Command cmd = Parser::parse(str, props);
 
   TEST_CHECK(toy_robot.Place(props));
-  TEST_CHECK(toy_robot.Face(game::ToyRobot::kDirectionWest, false));
+  TEST_CHECK(toy_robot.Face(game::ToyRobot::kDirectionWest));
 }
 
 TEST_LIST = {
